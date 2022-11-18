@@ -1,4 +1,3 @@
-
 import {db} from "../database/db.js"
 import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
@@ -13,7 +12,7 @@ async function postSingUp(req, res) {
         if (userExists) {
             return res.status(409).send({ message: "Esse email já existe" })
         }
-
+    
         await db.collection("users").insertOne({ ...user, password: hashPassword })
         return res.sendStatus(201)
 

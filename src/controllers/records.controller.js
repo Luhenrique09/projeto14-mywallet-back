@@ -9,7 +9,6 @@ async function postRecords(req, res) {
 
    
     try {
-     
         const session = await db.collection("sessions").findOne({ token })
         const user = await db.collection("users").findOne({ _id: session?.userId })
 
