@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { MongoClient } from "mongodb";
-import dotenv from "dotenv"
+
 import joi from "joi";
 import {
     postSingUp,
@@ -23,19 +22,11 @@ export const recordSchema = joi.object({
 })
 
 const app = express();
-dotenv.config();
+
 app.use(cors());
 app.use(express.json());
 
-const mongoClient = new MongoClient(process.env.MONGO_URI);
 
-try {
-    mongoClient.connect()
-} catch (err) {
-    console.log(err)
-}
-
-export const db = mongoClient.db("Mywallet");
 
 app.post("/sing-up", postSingUp);
 

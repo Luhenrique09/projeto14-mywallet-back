@@ -1,5 +1,5 @@
-import {recordSchema, db} from "../index.js"
-
+import {recordSchema} from "../index.js"
+import {db} from "../database/db.js"
 async function postRecords(req, res) {
     const { authorization } = req.headers
     const { value, description, type } = req.body

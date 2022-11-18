@@ -1,4 +1,5 @@
-import {userSchema, db} from "../index.js"
+import {userSchema} from "../index.js"
+import {db} from "../database/db.js"
 import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
 
