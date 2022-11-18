@@ -1,4 +1,4 @@
-import {userSchema} from "../index.js"
+import {userSchema} from "../models/users.model.js"
 import { db } from "../database/db.js";
 export async function validateUsersSchema (req, res, next){
     const user = req.body;

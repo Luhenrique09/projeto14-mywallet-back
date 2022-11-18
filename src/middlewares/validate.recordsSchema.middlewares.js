@@ -1,4 +1,4 @@
-import {recordSchema} from "../index.js"
+import {recordSchema} from "../models/records.model.js"
 
 export function validateRecordSchema (req, res, next){
     
