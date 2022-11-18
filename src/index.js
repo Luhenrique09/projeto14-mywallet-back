@@ -1,13 +1,8 @@
 import express from "express";
 import cors from "cors";
-
 import joi from "joi";
-import {
-    postSingUp,
-    postSingIn,
-    deleteSessions
-} from "./controllers/users.controller.js";
-import { postRecords, getRecords } from "./controllers/records.controller.js";
+import usersRouters from "./routes/users.routes.js"
+import recordsRouters from "./routes/records.routes.js"
 
 export const userSchema = joi.object({
     name: joi.string().required().min(3).max(50),
@@ -25,18 +20,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-
-
-app.post("/sing-up", postSingUp);
-
-app.post("/sing-in", postSingIn);
-
-app.post("/records", postRecords);
-
-app.get("/records", getRecords);
-
-app.delete("/sessions", deleteSessions);
-
+app.use(usersRouters);
+app.use(recordsRouters);
 
 app.listen(5000, () => console.log("Server running in port: 5000"))
