@@ -1,10 +1,10 @@
-import {userSchema} from "../index.js"
+
 import {db} from "../database/db.js"
 import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
 
 async function postSingUp(req, res) {
-    const user = req.body
+    const user = req.body;
 
     const hashPassword = bcrypt.hashSync(user.password, 10)
 
@@ -12,13 +12,6 @@ async function postSingUp(req, res) {
         const userExists = await db.collection("users").findOne({ email: user.email })
         if (userExists) {
             return res.status(409).send({ message: "Esse email já existe" })
-        }
-
-        const { error } = userSchema.validate(user, { abortEarly: false })
-
-        if (error) {
-            const errors = error.details.map((detail) => detail.message)
-            return res.status(400).send(errors)
         }
 
         await db.collection("users").insertOne({ ...user, password: hashPassword })
@@ -63,9 +56,6 @@ async function deleteSessions(req, res) {
     const { authorization } = req.headers
     const token = authorization?.replace("Bearer ", "")
 
-    if (!token) {
-        return res.sendStatus(401)
-    }
     try {
         const session = await db.collection("sessions").findOne({ token })
         const user = await db.collection("users").findOne({ _id: session?.userId })

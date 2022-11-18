@@ -1,5 +1,5 @@
-import {recordSchema} from "../index.js"
 import {db} from "../database/db.js"
+
 async function postRecords(req, res) {
     const { authorization } = req.headers
     const { value, description, type } = req.body
@@ -7,16 +7,9 @@ async function postRecords(req, res) {
     const dataFormated = `${data.getDate()}/${data.getMonth() + 1}`
     const token = authorization?.replace("Bearer ", "")
 
-    if (!token) {
-        return res.sendStatus(401)
-    }
+   
     try {
-        const { error } = recordSchema.validate(req.body, { abortEarly: false })
-
-        if (error) {
-            const errors = error.details.map((detail) => detail.message)
-            return res.status(400).send(errors)
-        }
+     
         const session = await db.collection("sessions").findOne({ token })
         const user = await db.collection("users").findOne({ _id: session?.userId })
 
@@ -46,10 +39,6 @@ async function postRecords(req, res) {
 async function getRecords(req, res) {
     const { authorization } = req.headers
     const token = authorization?.replace("Bearer ", "")
-
-    if (!token) {
-        return res.sendStatus(401)
-    }
 
     try {
         const session = await db.collection("sessions").findOne({ token })
